@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root"; // Change this if using another user
 $password = ""; // Change this if your MySQL user has a password
-$database = "your_database_name";
+$database = "project_inventory_system_db";
 
 $conn = new mysqli($servername, $username, $password, $database);
 
