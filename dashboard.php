@@ -1,13 +1,12 @@
 <?php
 // Database connection
 $servername = "localhost";
-$username = "username";
-$password = "password";
-$dbname = "project_inventory_db";
+$username = "root"; // Change this if using another user
+$password = ""; // Change this if your MySQL user has a password
+$database = "your_database_name";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $database);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
