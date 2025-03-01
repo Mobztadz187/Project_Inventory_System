@@ -7,18 +7,36 @@ $database = "project_inventory_system_db";
 
 $conn = new mysqli($servername, $username, $password, $database);
 
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get counts from database
-$total_students = $conn->query("SELECT COUNT(*) FROM users WHERE is_logged_in = 1")->fetch_row()[0];
-$total_stocks = $conn->query("SELECT COUNT(*) FROM items")->fetch_row()[0];
-$total_borrowed = $conn->query("SELECT SUM(quantity) FROM transactions WHERE status = 'borrowed'")->fetch_row()[0];
-$total_returned = $conn->query("SELECT SUM(quantity) FROM transactions WHERE status = 'returned'")->fetch_row()[0];
+// Function to safely execute queries
+function getSingleValue($conn, $query) {
+    $result = $conn->query($query);
+    if (!$result) {
+        die("Query failed: " . $conn->error); // Debugging: Display query error
+    }
+    $row = $result->fetch_row();
+    return $row ? $row[0] : 0; // Return 0 if no rows found
+}
+
+// Get counts from database with error handling
+$total_students = getSingleValue($conn, "SELECT COUNT(*) FROM users WHERE is_logged_in = 1");
+$total_stocks = getSingleValue($conn, "SELECT COUNT(*) FROM items");
+$total_borrowed = getSingleValue($conn, "SELECT SUM(quantity) FROM transactions WHERE status = 'borrowed'");
+$total_returned = getSingleValue($conn, "SELECT SUM(quantity) FROM transactions WHERE status = 'returned'");
 
 $conn->close();
+
+// Debug output
+echo "Total Logged-in Users: $total_students <br>";
+echo "Total Stocks: $total_stocks <br>";
+echo "Total Borrowed Items: $total_borrowed <br>";
+echo "Total Returned Items: $total_returned <br>";
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
