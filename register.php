@@ -43,9 +43,10 @@ if (isset($_POST["submit"])) {
     // Connect to database
     require_once "database/system_db.php";
 
-    if (!$conn) {
-        die("Database connection failed: " . mysqli_connect_error());
-    }
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+
 
     // Check if username or email already exists
     $sql = "SELECT * FROM users WHERE username = ? OR email = ?";
