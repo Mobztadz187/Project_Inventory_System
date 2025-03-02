@@ -10,20 +10,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
-    <?php include "nav.php"?>
-
-    <div class="container">
-        
+<div class="nav_header">
+        <nav class="navbar navbar-dark bg-primary">
+            <a href="#" class="navbar-brand">LOGO</a>
+            <i class="fa-solid fa-bars" style="margin-right: 90%; color: white;"></i>
+        </nav>
+</div>
+    <div class="container"> 
             <input type="text" placeholder="Search">
             <i class="fas fa-search" style="font-size: 23px; color: white; background-color: #007bff; border: solid 1px black; margin-bottom: 10px"></i>
             <div class="content"><form action="">
-
             </form>
     </div>
     <?php include "item-table.php"?>
 </div>
 </body>
-<script>
-    
-</script>
 </html>

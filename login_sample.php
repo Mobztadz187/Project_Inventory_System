@@ -2,7 +2,32 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$dbname = "project"
+$dbname = "project_inventory_system_db";
+
+$data = mysqli_connect($host, $user, $password, $dbname);
+
+if($data === false){
+    die("connection error");
+}
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $sql="SELECT * from sample_user WHERE username = '$username' AND password = '$password'";
+    
+    $result = mysqli_query($data, $sql);
+
+    $row = mysqli_fetch_array($result);
+
+    if($row["user_type"]=="user"){
+        header("");
+    }elseif($row["user_type"]=="admin"){
+        header("location: dashboard.php");
+    }else{
+        echo "username or password incorrect";
+    }
+}
+
 ?>
 
 
@@ -24,7 +49,7 @@ $dbname = "project"
         <form action="#" method="POST">
             <h1>Login</h1>
             <div class="form-group">
-                <input type="email" placeholder="Enter Email: " name="email" class="form-control" required>
+                <input type="text" placeholder="Enter Username: " name="username" class="form-control" required>
             </div>
             <div class="form-group">
                 <input type="password" placeholder="Enter Password: " name="password" class="form-control" required>
