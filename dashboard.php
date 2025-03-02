@@ -15,10 +15,10 @@
     <div class="dashboard-container">
     <form action="">
         <h3>Dashboard</h3>
-            <div class="total-stocks" style="background-color: skyblue !important;">Total Stocks</div>
-            <div class="total-students" style="background-color: green !important;">Total Students</div>
-            <div class="total-borrowed" style="background-color: orange !important;">Total Borrowed</div>
-            <div class="total-returned" style=" background-color: red !important">Total Returned</div>
+            <div class="total-stocks" style="background-color: skyblue">Total Stocks</div>
+            <div class="total-students" style="background-color: green">Total Students</div>
+            <div class="total-borrowed" style="background-color: orange">Total Borrowed</div>
+            <div class="total-returned" style=" background-color: red">Total Returned</div>
     </form>
     </div>
 </main>
