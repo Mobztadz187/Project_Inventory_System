@@ -27,14 +27,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         echo "username or password incorrect";
     }
 }
-
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,10 +37,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="CSS/style.css">
 </head>
-
 <body>
     <div class="login-container">
-        
         <form action="#" method="POST">
             <h1>Login</h1>
             <div class="form-group">
@@ -64,5 +57,4 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         </form>
     </div>
 </body>
-
 </html>
