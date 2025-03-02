@@ -73,7 +73,7 @@ if (!$conn) {
     } else {
         // Securely hash the password with SHA-256 and a salt
         $salt = bin2hex(random_bytes(32)); // Generate a secure salt
-        $passwordHashed = hash('sha256', $salt . $password); // Hash with salt
+        $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
 
         // Insert into the database
         $sql = "INSERT INTO users (username, first_name, last_name, email, password, salt) VALUES (?, ?, ?, ?, ?, ?)";

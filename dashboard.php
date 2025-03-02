@@ -1,41 +1,4 @@
-<?php
-// Database connection
-$servername = "localhost";
-$username = "root"; // Change this if using another user
-$password = ""; // Change this if your MySQL user has a password
-$database = "project_inventory_system_db";
 
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Function to safely execute queries
-function getSingleValue($conn, $query) {
-    $result = $conn->query($query);
-    if (!$result) {
-        die("Query failed: " . $conn->error); // Debugging: Display query error
-    }
-    $row = $result->fetch_row();
-    return $row ? $row[0] : 0; // Return 0 if no rows found
-}
-
-// Get counts from database with error handling
-$total_students = getSingleValue($conn, "SELECT COUNT(*) FROM users WHERE is_logged_in = 1");
-$total_stocks = getSingleValue($conn, "SELECT COUNT(*) FROM items");
-$total_borrowed = getSingleValue($conn, "SELECT SUM(quantity) FROM transactions WHERE status = 'borrowed'");
-$total_returned = getSingleValue($conn, "SELECT SUM(quantity) FROM transactions WHERE status = 'returned'");
-
-$conn->close();
-
-// Debug output
-echo "Total Logged-in Users: $total_students <br>";
-echo "Total Stocks: $total_stocks <br>";
-echo "Total Borrowed Items: $total_borrowed <br>";
-echo "Total Returned Items: $total_returned <br>";
-?>
 
 
 <!DOCTYPE html>
@@ -57,32 +20,21 @@ echo "Total Returned Items: $total_returned <br>";
         
 
     <form action="">
-    <h3>Dashboard</h3>
-    <div class="total-students">Total Students: <span id="total-students">0</span></div>
-    <div class="total-stocks">Total Stocks: <span id="total-stocks">0</span></div>
-    <div class="total-borrowed">Total Borrowed: <span id="total-borrowed">0</span></div>
-    <div class="total-returned">Total Returned: <span id="total-returned">0</span></div>
-</form>
+        <h3>Dashboard</h3>
+            <div class="total-stocks">
+                Total Students
+            </div>
+            <div class="total-students">
+                Total Stocks
+            </div>
+            <div class="total-borrowed">
+                Total Borrowed
+            </div>
+            <div class="total-returned">
+                Total Returned
+            </div>
+        </form>
 
-<script>
-    async function fetchDashboardData() {
-        try {
-            const response = await fetch('/api/dashboard-data'); // Replace with your actual API URL
-            const data = await response.json();
-
-            document.getElementById('total-students').textContent = data.totalStudents;
-            document.getElementById('total-stocks').textContent = data.totalStocks;
-            document.getElementById('total-borrowed').textContent = data.totalBorrowed;
-            document.getElementById('total-returned').textContent = data.totalReturned;
-        } catch (error) {
-            console.error("Error fetching dashboard data:", error);
-        }
-    }
-
-    // Fetch data every 5 seconds
-    setInterval(fetchDashboardData, 5000);
-    fetchDashboardData(); // Initial call
-</script>
     </div>
 
 </main>
