@@ -31,7 +31,7 @@
             <div class="total-returned">
                 Total Returned
             </div>
-        </form>
+    </form>
     </div>
 </main>
 </body>
