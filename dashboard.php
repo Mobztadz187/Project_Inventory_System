@@ -17,8 +17,6 @@
     <?php include "nav.php"?>
 <main>
     <div class="dashboard-container">
-        
-
     <form action="">
         <h3>Dashboard</h3>
             <div class="total-stocks">
@@ -34,9 +32,7 @@
                 Total Returned
             </div>
         </form>
-
     </div>
-
 </main>
 </body>
 </html>
