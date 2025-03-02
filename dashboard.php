@@ -19,18 +19,10 @@
     <div class="dashboard-container">
     <form action="">
         <h3>Dashboard</h3>
-            <div class="total-stocks">
-                Total Students
-            </div>
-            <div class="total-students">
-                Total Stocks
-            </div>
-            <div class="total-borrowed">
-                Total Borrowed
-            </div>
-            <div class="total-returned">
-                Total Returned
-            </div>
+            <div class="total-stocks">Total Students</div>
+            <div class="total-students">Total Stocks</div>
+            <div class="total-borrowed">Total Borrowed</div>
+            <div class="total-returned">Total Returned</div>
     </form>
     </div>
 </main>
