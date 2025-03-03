@@ -21,7 +21,7 @@
 
             </form>
     </div>
-    <?php include "../Navs/item-table.php"?>
+    <?php include "../Navs/admin-item-table.php"?>
 </div>
 </body>
 <script>

@@ -4,6 +4,9 @@ if (!isset($_SESSION['username']) || $_SESSION['user_type'] !== 'admin') {
     header("Location: login.php"); // Send non-admins back to login
     exit();
 }
+include "../database/system_db.php";
+include "../Total/total-stock.php";
+include "../Total/total-student.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,8 +25,8 @@ if (!isset($_SESSION['username']) || $_SESSION['user_type'] !== 'admin') {
     <div class="dashboard-container">
     <form action="">
         <h3>Dashboard</h3>
-            <div class="total-stocks" style="background-color: skyblue">Total Stocks<span class="count">0</span></div>     
-            <div class="total-students" style="background-color: green">Total Students<span class="count">0</span></div>
+            <div class="total-stocks" style="background-color: skyblue">Total Stocks<span class="count"><?php echo $totalStocks; ?></span></div>     
+            <div class="total-students" style="background-color: green">Total Students<span class="count"><?php echo $totalUsers; ?></span></div>
             <div class="total-borrowed" style="background-color: orange">Total Borrowed<span class="count">0</span></div>
             <div class="total-returned" style=" background-color: red">Total Returned<span class="count">0</span></div>
     </form>
