@@ -7,14 +7,3 @@
         </div>
     </nav>
 </div>
-<div class="side-nav" id="sideNav">
-<div class="profile_name">
-  Hello
-</div>
-
-  <ul class = "ul-nav">
-    
-    <li><a href="../Student/user_item_list.php">Item List</a></li>
-
-  </ul>
-</div>

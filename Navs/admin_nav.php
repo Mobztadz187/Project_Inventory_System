@@ -15,6 +15,7 @@
   <ul class = "ul-nav">
     <li><a href="../Admin/dashboard.php">Dashboard</a></li>
     <li><a href="../Admin/item-list.php">Item List</a></li>
+    <li><a href="../CRUD/add_item.php">Add Item</a></li>
     <li><a href="../Admin/borrow-item.php">Borrow Item</a></li>
     <li><a href="../Admin/return-item.php">Return Item</a></li>
   </ul>

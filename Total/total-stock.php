@@ -1,8 +1,8 @@
 <?php
 
 
-$result = $conn->query("SELECT COUNT(*) AS stock FROM item_list");
+$result = $conn->query("SELECT SUM(stock) AS total_stock FROM item_list");
 $row = $result->fetch_assoc();
-$totalStocks = $row['stock'];
+$totalStocks = $row['total_stock'];
 
 
