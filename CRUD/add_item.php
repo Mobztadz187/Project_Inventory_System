@@ -6,21 +6,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item = trim($_POST["item"]); // Trim to remove unnecessary spaces
     $stock = $_POST["stock"];
 
-    // **1️⃣ Check if item already exists**
+    // ** Check if item already exists**
     $stmtCheck = $conn->prepare("SELECT stock FROM item_list WHERE item = ?");
     $stmtCheck->bind_param("s", $item);
     $stmtCheck->execute();
     $result = $stmtCheck->get_result();
     
     if ($row = $result->fetch_assoc()) {
-        // **2️⃣ If item exists, update the stock**
+        // ** If item exists, update the stock**
         $newStock = $row['stock'] + $stock;
         $stmtUpdate = $conn->prepare("UPDATE item_list SET stock = ? WHERE item = ?");
         $stmtUpdate->bind_param("is", $newStock, $item);
         $stmtUpdate->execute();
         $stmtUpdate->close();
     } else {
-        // **3️⃣ If item doesn't exist, insert a new row**
+        // ** If item doesn't exist, insert a new row**
         $stmtInsert = $conn->prepare("INSERT INTO item_list (item, stock) VALUES (?, ?)");
         $stmtInsert->bind_param("si", $item, $stock);
         $stmtInsert->execute();
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmtCheck->close();
     $conn->close();
 
-    // **4️⃣ Redirect back with success message**
+    // ** Redirect back with success message**
     header("Location: ../Admin/item-list.php?message=Item added or updated");
     exit();
 }
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="number" class="form-control" id="stock" name="stock" required>
                 </div>
                 <button type="submit" class="btn btn-success" name="submit">Submit</button>
-                <a href="item_list.php" class="btn btn-danger">Cancel</a> <!-- Fixed Cancel button -->
+                <a href="../Admin/item-list.php" class="btn btn-danger">Cancel</a> <!-- Fixed Cancel button -->
             </form>
         </div>
     </div>
