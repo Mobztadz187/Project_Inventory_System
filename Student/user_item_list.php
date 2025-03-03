@@ -13,25 +13,18 @@ if (!isset($_SESSION['username']) || $_SESSION['user_type'] === 'admin') {
     <title>Inventory System</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="../CSS/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
-<div class="nav_header">
-    <nav class="navbar navbar-dark bg-primary d-flex justify-content-between px-3">
-        <a href="#" class="navbar-brand">LOGO</a>
-        <div>
-            <a href="logout.php" class="btn btn-danger">Logout</a>
-        </div>
-    </nav>
-</div>
+<?php include "../Navs/student_nav.php"?>
     <div class="container"> 
             <input type="text" placeholder="Search">
             <i class="fas fa-search" style="font-size: 23px; color: white; background-color: #007bff; border: solid 1px black; margin-bottom: 10px"></i>
             <div class="content"><form action="">
             </form>
     </div>
-    <?php include "item-table.php"?>
+    <?php include "../Navs/item-table.php"?>
 </div>
 </body>
 </html>

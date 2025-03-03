@@ -20,7 +20,7 @@
                 </thead>
                     <tbody>
                     <?php
-            include("database/system_db.php");
+            include("../database/system_db.php");
             $sql = "SELECT * FROM item_list";
             $result = $conn->query($sql);
             

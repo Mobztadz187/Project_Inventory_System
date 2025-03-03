@@ -25,9 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_type'] = $user['user_type'];
         
             if ($_SESSION['user_type'] === 'admin') {
-                header("Location: dashboard.php");
+                header("Location: Admin/dashboard.php");
             } else {
-                header("Location: user_item_list.php");
+                header("Location: Student/user_item_list.php");
             }
             exit();
         } else {
