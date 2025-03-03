@@ -1,8 +1,58 @@
+<?php
+session_start();
+include 'database/system_db.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    function decryptPassword($encrypted_password) {
+        return openssl_decrypt($encrypted_password, "AES-128-ECB", SECRET_KEY);
+    }
+
+    // Check username
+    $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $decrypted_password = decryptPassword($user['password']);
+
+        if ($password === $decrypted_password) {
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['user_type'] = $user['user_type'];
+        
+            if ($_SESSION['user_type'] === 'admin') {
+                header("Location: dashboard.php");
+            } else {
+                header("Location: user_item_list.php");
+            }
+            exit();
+        } else {
+            echo "Invalid password!";
+        }
+    } else {
+        echo "User not found!";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+
+
+
+
+
+
+<!-- HTML part (Same as your original form) -->
 
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,12 +62,10 @@
 </head>
 <body>
     <div class="login-container">
-        <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
-        
-        <form action="login.php" method="post">
+        <form action="#" method="POST">
             <h1>Login</h1>
             <div class="form-group">
-                <input type="email" placeholder="Enter Email: " name="email" class="form-control" required>
+                <input type="text" placeholder="Enter Username: " name="username" class="form-control" required>
             </div>
             <div class="form-group">
                 <input type="password" placeholder="Enter Password: " name="password" class="form-control" required>
@@ -32,5 +80,4 @@
         </form>
     </div>
 </body>
-
 </html>

@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['username']) || $_SESSION['user_type'] === 'admin') {
+    header("Location: login.php"); // Send admins back to login
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +18,12 @@
 </head>
 <body>
 <div class="nav_header">
-        <nav class="navbar navbar-dark bg-primary">
-            <a href="#" class="navbar-brand">LOGO</a>
-            <i class="fa-solid fa-bars" style="margin-right: 90%; color: white;"></i>
-        </nav>
+    <nav class="navbar navbar-dark bg-primary d-flex justify-content-between px-3">
+        <a href="#" class="navbar-brand">LOGO</a>
+        <div>
+            <a href="logout.php" class="btn btn-danger">Logout</a>
+        </div>
+    </nav>
 </div>
     <div class="container"> 
             <input type="text" placeholder="Search">

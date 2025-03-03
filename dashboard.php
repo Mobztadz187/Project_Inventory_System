@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['username']) || $_SESSION['user_type'] !== 'admin') {
+    header("Location: login.php"); // Send non-admins back to login
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

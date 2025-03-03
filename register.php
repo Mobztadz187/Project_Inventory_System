@@ -1,3 +1,60 @@
+<?php
+session_start();
+include 'database/system_db.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $user_type = $_POST['user_type'];
+
+    if ($password !== $confirm_password) {
+        die("Passwords do not match!");
+    }
+
+    function encryptPassword($password) {
+        return openssl_encrypt($password, "AES-128-ECB", SECRET_KEY);
+    }
+
+    $encrypted_password = encryptPassword($password);
+
+    // Check if username already exists in sample_user table
+    $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
+    if (!$stmt) {
+        die("Error in SELECT query: " . $conn->error);
+    }
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        die("Username already exists!");
+    }
+
+    // Insert user into sample_user table
+    $stmt = $conn->prepare("INSERT INTO user (first_name, last_name, username, email, password, user_type) VALUES (?, ?, ?, ?, ?, ?)");
+    
+    if (!$stmt) {
+        die("Error in INSERT query: " . $conn->error);
+    }
+
+    $stmt->bind_param("ssssss", $firstname, $lastname, $username, $email, $encrypted_password, $user_type);
+
+    if ($stmt->execute()) {
+        echo "Registration successful!";
+    } else {
+        die("Error executing query: " . $stmt->error);
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,87 +69,8 @@
 
 <body>
     <div class="login-container">
-    <?php
-if (isset($_POST["submit"])) {
-    $username = $_POST["username"];
-    $firstName = $_POST["firstname"];
-    $lastName = $_POST["lastname"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $confirmPassword = $_POST["confirm_password"];
+    
 
-    $errors = array();
-
-    // Validate inputs
-    if (empty($username) || empty($firstName) || empty($lastName) || empty($email) || empty($password) || empty($confirmPassword)) {
-        array_push($errors, "All fields are required.");
-    }
-    if (!preg_match("/^[a-zA-Z0-9_]{3,20}$/", $username)) {
-        array_push($errors, "Username must be 3-20 characters long and contain only letters, numbers, or underscores.");
-    }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        array_push($errors, "Invalid email format.");
-    }
-    if (strlen($password) < 8) {
-        array_push($errors, "Password must be at least 8 characters long.");
-    }
-    if ($password !== $confirmPassword) {
-        array_push($errors, "Passwords do not match.");
-    }
-
-    // Connect to database
-    require_once "database/system_db.php";
-
-if (!$conn) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
-
-
-    // Check if username or email already exists
-    $sql = "SELECT * FROM users WHERE username = ? OR email = ?";
-    $stmt = mysqli_stmt_init($conn);
-    if (mysqli_stmt_prepare($stmt, $sql)) {
-        // Corrected order: username first, then email
-        mysqli_stmt_bind_param($stmt, "ss", $username, $email);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        
-        if (mysqli_num_rows($result) > 0) {
-            array_push($errors, "Email or Username already exists.");
-        }
-    } else {
-        error_log("MySQL Error (SELECT query): " . mysqli_error($conn)); // Log for debugging
-        array_push($errors, "An unexpected error occurred. Please try again later.");
-    }
-
-    // Display errors
-    if (count($errors) > 0) {
-        foreach ($errors as $error) {
-            echo "<div class='alert alert-danger'>$error</div>";
-        }
-    } else {
-        // Securely hash the password with SHA-256 and a salt
-        $salt = bin2hex(random_bytes(32)); // Generate a secure salt
-        $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
-
-        // Insert into the database
-        $sql = "INSERT INTO users (username, first_name, last_name, email, password, salt) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = mysqli_stmt_init($conn);
-        if (mysqli_stmt_prepare($stmt, $sql)) {
-            mysqli_stmt_bind_param($stmt, "ssssss", $username, $firstName, $lastName, $email, $passwordHashed, $salt);
-            if (mysqli_stmt_execute($stmt)) {
-                echo "<div class='alert alert-success'>You are registered successfully.</div>";
-            } else {
-                error_log("MySQL Error (INSERT query): " . mysqli_error($conn));
-                echo "<div class='alert alert-danger'>Something went wrong while inserting data.</div>";
-            }
-        } else {
-            error_log("MySQL Error (INSERT query preparation): " . mysqli_error($conn));
-            die("An error occurred while preparing the INSERT query.");
-        }
-    }
-}
-?>
 
 
         <form action="register.php" method="post">
@@ -116,8 +94,17 @@ if (!$conn) {
                 <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password: ">
             </div>
             <div class="form-group">
+    <label for="user_type">Select User Type:</label>
+    <select class="form-control" name="user_type" id="user_type" required>
+        <option value="" disabled selected>Select user type</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+    </select>
+</div>
+            <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Register" name="submit">
             </div>
+            
             <div>
                 <p>Do you have an account? Then <a href="login.php">Log In</a></p>
             </div>
