@@ -33,8 +33,13 @@
                     <td>$id</td>
                     <td>$row[item]</td>
                     <td>$row[stock]</td>
-            
+                   <td>
+                    <a class='btn btn-success' href='../CRUD/edit_item.php?id=$row[id]'>Edit</a>
+                    <a class='btn btn-danger' href='../CRUD/delete_item.php?id={$row['id']}'>Delete</a>
+                   </td>
                 </tr>
+
+                    
                 ";
             }
             
