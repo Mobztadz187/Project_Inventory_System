@@ -11,5 +11,15 @@
 </head>
 <body>
 <?php include "../Navs/admin_nav.php"?>
+
+    <div class="container">
+        
+            <input type="text" placeholder="Search">
+            <i class="fas fa-search" style="font-size: 23px; color: white; background-color: #007bff; border: solid 1px black; margin-bottom: 10px"></i>
+            <div class="content"><form action="">
+
+            </form>
+    </div>
+    <?php include "../Navs/admin_borrowed_table.php"?>
 </body>
 </html>

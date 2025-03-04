@@ -8,11 +8,12 @@
     </nav>
 </div>
 <div class="side-nav" id="sideNav">
-<div class="profile_name">
-  Hello
-</div>
 
   <ul class = "ul-nav">
+    <div class="profile">
+    <i class="fa-solid fa-user" style="color: white; font-size: 50px; margin: 30px 0 30px 50px"></i>
+    <div class="profile-name" style="color: white; font-size: 30px;">Hello, Admin</div><br>   
+    </div>
     <li><a href="../Admin/dashboard.php">Dashboard</a></li>
     <li><a href="../Admin/item-list.php">Item List</a></li>
     <li><a href="../CRUD/add_item.php">Add Item</a></li>

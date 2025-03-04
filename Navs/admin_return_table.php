@@ -12,35 +12,30 @@
                         
                 <th>ID <i class="fa-solid fa-sort" style="margin:20px 0 0 10px;"></i></th> 
                 <th>Item <i class="fa-solid fa-sort" style="margin:20px 0 0 10px;"></i></th> 
-                <th>Stock <i class="fa-solid fa-sort" style="margin:20px 0 0 10px;"></i></th>
-                <th>Borrowed<i class="fa-solid fa-sort" style="margin: 20px 0 0 10px;"></i></th>
-                <th>Returned<i class="fa-solid fa-sort" style="margin: 20px 0 0 10px;"></i></th>
-                <th style="margin: 20px 0 0 10px;">Actions</th>
+                <th>Date of Return<i class="fa-solid fa-sort" style="margin:20px 0 0 10px;"></i></th>
+                <th>Name<i class="fa-solid fa-sort" style="margin:20px 0 0 10px;"></i></th>
+                
                     </tr>
                 </thead>
                     <tbody>
                     <?php
             include("../database/system_db.php");
-            $sql = "SELECT * FROM item_list";
+            $sql = "SELECT * FROM return_items";
             $result = $conn->query($sql);
             
             if(!$result){
                 die("Query Failed: ".$conn->error);
             }
             while ($row = $result->fetch_assoc()) {
-                $item_id = $row['item_id']; // Ensure ID exists
+                $return_id = $row['return_id']; // Ensure ID exists
                 echo "
                 <tr>
                 
-                    <td>$item_id</td>
+                    <td></td>// borrow id
                     <td>$row[item]</td>
-                    <td>$row[stock]</td>
-                    <td></td>
-                    <td></td>
-                   <td>
-                    <a class='btn btn-success' href='../CRUD/edit_item.php?item_id=$row[item_id]'>Edit</a>
-                    <a class='btn btn-danger' href='../CRUD/delete_item.php?item_id={$row['item_id']}'>Delete</a>
-                   </td>
+                    <td></td> //date of borrow
+                    <td></td> //name
+                    
                 </tr>
 
                     

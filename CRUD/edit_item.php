@@ -12,13 +12,13 @@ $error = "";
 $success = "";
 
 if ($_SERVER["REQUEST_METHOD"] == 'GET') {
-    if (!isset($_GET['id'])) {
+    if (!isset($_GET['item_id'])) {
         header("location:../Admin/item-list.php");
         exit;
     }
 
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM item_list WHERE id=$id";
+    $item_id = $_GET['item_id'];
+    $sql = "SELECT * FROM item_list WHERE item_id=$item_id";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
 
@@ -30,11 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == 'GET') {
     $item = $row["item"];
     $stock = $row["stock"];
 } else {
-    $id = $_POST["id"] ?? "";
+    $item_id = $_POST["item_id"] ?? "";
     $item = $_POST["item"] ?? "";
     $stock = $_POST["stock"] ?? "";
 
-    $sql = "UPDATE item_list SET item='$item', stock='$stock' WHERE id='$id'";
+    $sql = "UPDATE item_list SET item='$item', stock='$stock' WHERE item_id='$item_id'";
     $result = $conn->query($sql);
 
     if ($result) {
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'GET') {
                 <?php if ($error) { echo "<p class='text-danger text-center'>$error</p>"; } ?>
                 <?php if ($success) { echo "<p class='text-success text-center'>$success</p>"; } ?>
 
-                <input type="hidden" name="id" value="<?php echo $id; ?>" class="form-control"> <br>
+                <input type="hidden" name="id" value="<?php echo $item_id; ?>" class="form-control"> <br>
 
                 <label> ITEM: </label>
                 <input type="text" name="item" value="<?php echo $item; ?>" class="form-control"> <br>
